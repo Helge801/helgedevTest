@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 	"net/http"
-	"os"
 	"os/exec"
 	"time"
 
@@ -32,6 +31,11 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func HandleUpdate(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("success"))
+	go update()
+}
+
+func update() {
+	time.Sleep(time.Second * 3)
 	exec.Command("go", "run", "~/go/src/github.com/updater/main.go")
-	os.Exit(0)
 }
