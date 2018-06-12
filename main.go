@@ -3,6 +3,8 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
+	"os/exec"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -11,10 +13,11 @@ import (
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", HomeHandler)
+	r.HandleFunc("/updateviagit", HandleUpdate)
 
 	srv := &http.Server{
 		Handler: r,
-		Addr:    ":80",
+		Addr:    ":8000",
 		// Good practice: enforce timeouts for servers you create!
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
@@ -26,4 +29,9 @@ func main() {
 // HomeHandler handles home page requests
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("<H1>Hello from the raspberry pi</H1>"))
+}
+
+func HandleUpdate(w http.ResponseWriter, r *http.Request) {
+	exec.Command("go", "run", "~/go/src/github.com/updater/main.go")
+	os.Exit(0)
 }
