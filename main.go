@@ -32,12 +32,12 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func HandleUpdate(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("success"))
+	w.Write([]byte("updating..."))
 	go update()
 }
 
 func update() {
-	time.Sleep(time.Second * 3)
-	exec.Command("go", "run", "~/go/src/github.com/updater/main.go")
+	time.Sleep(time.Second * 1)
+	go exec.Command("go", "run", "~/go/src/github.com/updater/main.go", "&", "disown")
 	os.Exit(0)
 }
