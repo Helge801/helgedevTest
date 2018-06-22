@@ -14,6 +14,7 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", HomeHandler)
 	r.HandleFunc("/updateviagit", HandleUpdate)
+	r.HandleFunc("/gethash",HandleGetHash)
 
 	srv := &http.Server{
 		Handler: r,
@@ -34,6 +35,10 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 func HandleUpdate(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("updating..."))
 	go update()
+}
+
+func HandleGetHash(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("not yet availible"))
 }
 
 func update() {
